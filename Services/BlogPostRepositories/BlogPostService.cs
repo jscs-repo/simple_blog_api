@@ -1,16 +1,15 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using AutoMapper;
 using dotnet_blog_api.Data;
-using dotnet_blog_api.Dtos;
+using dotnet_blog_api.Dtos.BlogPostDtos;
 using dotnet_blog_api.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
-namespace dotnet_blog_api.Services
+namespace dotnet_blog_api.Services.BlogPostRepositories
 {
 
     public class BlogPostService : IBlogPostService

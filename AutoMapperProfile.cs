@@ -1,5 +1,5 @@
 using AutoMapper;
-using dotnet_blog_api.Dtos;
+using dotnet_blog_api.Dtos.BlogPostDtos;
 using dotnet_blog_api.Models;
 
 namespace dotnet_blog_api

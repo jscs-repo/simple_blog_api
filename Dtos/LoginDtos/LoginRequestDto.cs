@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace dotnet_blog_api.Dtos
+namespace dotnet_blog_api.Dtos.LoginDtos
 {
     public class LoginRequestDto
     {

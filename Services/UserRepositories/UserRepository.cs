@@ -3,11 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using dotnet_blog_api.Data;
 using dotnet_blog_api.Dtos;
+using dotnet_blog_api.Dtos.LoginDtos;
 using dotnet_blog_api.Models;
 using dotnet_blog_api.Services.Authenticators;
 using dotnet_blog_api.Services.PasswordHasher;
-using dotnet_blog_api.Services.RefreshTokenRepository;
-using dotnet_blog_api.Services.TokenGenerators;
 using Microsoft.EntityFrameworkCore;
 
 namespace dotnet_blog_api.Services.UserRepositories

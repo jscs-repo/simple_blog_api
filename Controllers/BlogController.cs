@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using dotnet_blog_api.Dtos;
-using dotnet_blog_api.Models;
+using dotnet_blog_api.Dtos.BlogPostDtos;
 using dotnet_blog_api.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

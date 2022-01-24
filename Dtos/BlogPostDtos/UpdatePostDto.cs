@@ -1,10 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using dotnet_blog_api.Models;
 
-namespace dotnet_blog_api.Dtos
+namespace dotnet_blog_api.Dtos.BlogPostDtos
 {
     public class UpdatePostDto
     {

@@ -1,8 +1,6 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using dotnet_blog_api.Dtos;
+using dotnet_blog_api.Dtos.BlogPostDtos;
 using dotnet_blog_api.Models;
 
 namespace dotnet_blog_api.Services

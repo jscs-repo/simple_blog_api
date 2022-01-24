@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using dotnet_blog_api.Data;
-using dotnet_blog_api.Dtos;
+using dotnet_blog_api.Dtos.TokenDtos;
 using dotnet_blog_api.Models;
 using Microsoft.EntityFrameworkCore;
 

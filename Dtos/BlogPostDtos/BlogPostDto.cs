@@ -1,9 +1,6 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace dotnet_blog_api.Dtos
+namespace dotnet_blog_api.Dtos.BlogPostDtos
 {
     public class BlogPostDto
     {

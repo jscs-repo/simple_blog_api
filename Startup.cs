@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using dotnet_blog_api.Data;
 using dotnet_blog_api.Services;
+using dotnet_blog_api.Services.BlogPostRepositories;
 using dotnet_blog_api.Services.Authenticators;
 using dotnet_blog_api.Services.PasswordHasher;
 using dotnet_blog_api.Services.RefreshTokenRepository;

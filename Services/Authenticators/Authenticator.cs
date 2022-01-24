@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using dotnet_blog_api.Dtos;
+using dotnet_blog_api.Dtos.TokenDtos;
 using dotnet_blog_api.Models;
 using dotnet_blog_api.Services.RefreshTokenRepository;
 using dotnet_blog_api.Services.TokenGenerators;
