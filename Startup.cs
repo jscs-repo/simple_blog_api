@@ -37,6 +37,7 @@ namespace dotnet_blog_api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(options => options.UseSqlite(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddCors();
             services.AddControllers().AddNewtonsoftJson(o => o.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
 
             services.AddAutoMapper(typeof(Startup));
@@ -86,6 +87,8 @@ namespace dotnet_blog_api
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
 
             app.UseAuthentication();
 

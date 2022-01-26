@@ -19,7 +19,8 @@ namespace dotnet_blog_api.Controllers
             _blogPostService = blogPostService;
         }
 
-        [Authorize(Roles = "Admin")]
+        // [Authorize(Roles = "Admin")]
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllPostsAsync()
         {
@@ -72,6 +73,11 @@ namespace dotnet_blog_api.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPostAsync(AddPostDto addPostDto)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
             var newPost = await _blogPostService.AddPost(addPostDto);
 
             return CreatedAtRoute(nameof(GetPostByIdAsync), new { id = newPost.Id }, newPost.AsDto());

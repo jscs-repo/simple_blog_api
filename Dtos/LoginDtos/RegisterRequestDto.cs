@@ -4,12 +4,18 @@ namespace dotnet_blog_api.Dtos.LoginDtos
 {
     public class RegisterRequestDto
     {
-        [Required]
+        [Required(ErrorMessage = "Please enter email address")]
         [EmailAddress]
         public string Email { get; set; }
+
+        [Required(ErrorMessage = "Please enter username")]
         public string Username { get; set; }
+
+        [Required]
         public string Password { get; set; }
+
+        [Required]
         public string ConfirmPassword { get; set; }
-        public string Role { get; set; }
+
     }
 }

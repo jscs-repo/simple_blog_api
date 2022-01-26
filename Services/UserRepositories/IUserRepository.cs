@@ -12,7 +12,7 @@ namespace dotnet_blog_api.Services.UserRepositories
         Task<User> GetByUsername(string username);
         Task<User> GetUserById(int userId);
 
-        Task<ServiceResponse<int>> CreateUser(User user, string password);
+        Task<ServiceResponse<ShowUsersDto>> CreateUser(User user, string password);
 
         Task<ServiceResponse<List<ShowUsersDto>>> GetAllUsers();
 

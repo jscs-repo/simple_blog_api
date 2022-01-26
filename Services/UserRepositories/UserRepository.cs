@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using dotnet_blog_api.Data;
 using dotnet_blog_api.Dtos;
 using dotnet_blog_api.Dtos.LoginDtos;
@@ -16,17 +17,19 @@ namespace dotnet_blog_api.Services.UserRepositories
         private readonly DataContext _context;
         private readonly IPasswordHasher _passwordHasher;
         private readonly Authenticator _authenticator;
+        private readonly IMapper _mapper;
 
-        public UserRepository(DataContext context, IPasswordHasher passwordHasher, Authenticator authenticator)
+        public UserRepository(DataContext context, IPasswordHasher passwordHasher, Authenticator authenticator, IMapper mapper)
         {
             _context = context;
             _passwordHasher = passwordHasher;
             _authenticator = authenticator;
+            _mapper = mapper;
         }
 
-        public async Task<ServiceResponse<int>> CreateUser(User user, string password)
+        public async Task<ServiceResponse<ShowUsersDto>> CreateUser(User user, string password)
         {
-            ServiceResponse<int> serviceResponse = new ServiceResponse<int>();
+            ServiceResponse<ShowUsersDto> serviceResponse = new ServiceResponse<ShowUsersDto>();
 
             var userEmail = await GetByEmail(user.Email);
             if (userEmail is not null)
@@ -45,10 +48,15 @@ namespace dotnet_blog_api.Services.UserRepositories
             }
 
             user.PasswordHash = _passwordHasher.HashPassword(password);
-            serviceResponse.Data = user.Id;
 
             await _context.Users.AddAsync(user);
             await _context.SaveChangesAsync();
+
+            var userDto = _mapper.Map<ShowUsersDto>(user);
+
+            //serviceResponse.Data = user.Id;
+            serviceResponse.Data = userDto;
+            serviceResponse.Message = "Register Success";
 
             return serviceResponse;
         }
@@ -103,6 +111,7 @@ namespace dotnet_blog_api.Services.UserRepositories
 
             var allUsersDto = await allUsers.Select(u => new ShowUsersDto
             {
+                Id = u.Id,
                 Email = u.Email,
                 Username = u.Username,
                 BlogPosts = u.BlogPosts,

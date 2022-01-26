@@ -47,7 +47,7 @@ namespace dotnet_blog_api.Controllers
                 return BadRequest(new { message = "Passwords do not match" });
             }
 
-            ServiceResponse<int> response = await _userRepository.CreateUser(
+            ServiceResponse<ShowUsersDto> response = await _userRepository.CreateUser(
                 new User
                 {
                     Email = registerRequestDto.Email,
