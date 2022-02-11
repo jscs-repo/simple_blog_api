@@ -19,12 +19,10 @@ namespace dotnet_blog_api.Controllers
             _blogPostService = blogPostService;
         }
 
-        // [Authorize(Roles = "Admin")]
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllPostsAsync()
         {
-            // need to change this so only adminstrators can see all posts
             ServiceResponse<List<GetPostDto>> response = await _blogPostService.GetAllPosts();
 
             if (response.Data is null)
@@ -54,6 +52,7 @@ namespace dotnet_blog_api.Controllers
             return Ok(response);
         }
 
+        [AllowAnonymous]
         [HttpGet("{id}", Name = "GetPostByIdAsync")]
         public async Task<IActionResult> GetPostByIdAsync(int id)
         {

@@ -53,8 +53,11 @@ namespace dotnet_blog_api.Services.BlogPostRepositories
         {
             ServiceResponse<GetPostDto> serviceResponse = new ServiceResponse<GetPostDto>();
 
-            var post = await _context.BlogPosts.Include(u => u.User).FirstOrDefaultAsync(
-                x => x.Id == id && x.UserId == GetUserId());
+            // var post = await _context.BlogPosts.Include(u => u.User).FirstOrDefaultAsync(
+            //     x => x.Id == id && x.UserId == GetUserId());
+
+            var post = await _context.BlogPosts.Include(x => x.User).FirstOrDefaultAsync(
+                x => x.Id == id);
 
             serviceResponse.Data = _mapper.Map<GetPostDto>(post);
 
