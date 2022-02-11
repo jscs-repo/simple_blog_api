@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -97,6 +98,7 @@ namespace dotnet_blog_api.Services.BlogPostRepositories
 
             post.Title = updatePostDto.Title;
             post.Content = updatePostDto.Content;
+            post.Updated = DateTime.Now.ToString("D");
 
             _context.BlogPosts.Update(post);
 

@@ -10,8 +10,8 @@ namespace dotnet_blog_api.Models
         public int Id { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public DateTime Created { get; set; } = DateTime.Now;
-        public DateTime Updated { get; set; } = DateTime.Now;
+        public string Created { get; set; } = DateTime.Now.ToString("D");
+        public string Updated { get; set; } = DateTime.Now.ToString("D");
         public bool Public { get; set; } = false;
         // public List<BlogPostLikes> Likes { get; set; }
 

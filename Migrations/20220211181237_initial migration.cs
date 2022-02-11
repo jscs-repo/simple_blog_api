@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace dotnet_blog_api.Migrations
 {
-    public partial class initialMigration : Migration
+    public partial class initialmigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -28,7 +27,7 @@ namespace dotnet_blog_api.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Email = table.Column<string>(type: "TEXT", nullable: false),
-                    Username = table.Column<string>(type: "TEXT", nullable: true),
+                    Username = table.Column<string>(type: "TEXT", nullable: false),
                     PasswordHash = table.Column<string>(type: "TEXT", nullable: true),
                     Role = table.Column<string>(type: "TEXT", nullable: true)
                 },
@@ -45,8 +44,8 @@ namespace dotnet_blog_api.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Title = table.Column<string>(type: "TEXT", nullable: true),
                     Content = table.Column<string>(type: "TEXT", nullable: true),
-                    Created = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Updated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Created = table.Column<string>(type: "TEXT", nullable: true),
+                    Updated = table.Column<string>(type: "TEXT", nullable: true),
                     Public = table.Column<bool>(type: "INTEGER", nullable: false),
                     UserId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -64,7 +63,7 @@ namespace dotnet_blog_api.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "Email", "PasswordHash", "Role", "Username" },
-                values: new object[] { 1, "admin@email.com", "$2a$11$FEI9/luLtrUUX/CGwd6fzugbW2aO13sfe7dywIp45tpgUWwDZydqm", "Admin", "admin" });
+                values: new object[] { 1, "admin@email.com", "$2a$11$LvspAwstVtFlAzuuLKTH7u8Lx8BjTQqgnEdALXAE/MLNfmHNCFK.W", "Admin", "admin" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BlogPosts_UserId",
