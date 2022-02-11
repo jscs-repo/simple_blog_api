@@ -9,5 +9,6 @@ namespace dotnet_blog_api.Dtos.BlogPostDtos
 
         [Required]
         public string Content { get; set; }
+        public string Username { get; set; }
     }
 }
