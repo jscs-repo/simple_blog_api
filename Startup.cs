@@ -20,6 +20,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace dotnet_blog_api
 {
@@ -56,6 +57,21 @@ namespace dotnet_blog_api
                     ValidateIssuer = true,
                     ClockSkew = TimeSpan.Zero
                 };
+
+                // receives the x-access-token key from the cookie on the client
+                // options.Events = new JwtBearerEvents()
+                // {
+                //     OnMessageReceived = context =>
+                //     {
+
+                //         if (context.Request.Cookies.ContainsKey("RefreshToken"))
+                //         {
+                //             context.Token = context.Request.Cookies["RefreshToken"];
+                //         }
+                //         return Task.CompletedTask;
+                //     }
+
+                // };
             });
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -87,7 +103,12 @@ namespace dotnet_blog_api
 
             app.UseRouting();
 
-            app.UseCors(x => x.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
+            app.UseCors(x => x
+                .WithOrigins("http://localhost:3000")
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowCredentials()
+                );
 
             app.UseAuthentication();
 

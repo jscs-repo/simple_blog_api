@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using dotnet_blog_api.Dtos.BlogPostDtos;
@@ -76,6 +77,9 @@ namespace dotnet_blog_api.Controllers
             {
                 return BadRequest();
             }
+
+            var jwt = Request.Cookies["X-Access-Token"];
+
 
             var newPost = await _blogPostService.AddPost(addPostDto);
 

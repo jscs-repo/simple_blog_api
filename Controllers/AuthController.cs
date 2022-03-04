@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -76,25 +77,42 @@ namespace dotnet_blog_api.Controllers
 
             if (!response.Success) { return BadRequest(response); }
 
+            Response.Cookies.Append(key: "RefreshToken", value: response.Data.RefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.Now.AddMinutes(131400),
+                Secure = true,
+            });
+
+            // return Ok(new { accessToken = response.Data.AccessToken });
             return Ok(response);
         }
 
 
+
+        //public async Task<IActionResult> Refresh(RefreshRequest refreshRequest)
         [HttpPost("refresh")]
-        public async Task<IActionResult> Refresh(RefreshRequest refreshRequest)
+        public async Task<IActionResult> Refresh()
         {
-            bool isValidRefreshToken = _refreshTokenValidator.Validate(refreshRequest.RefreshToken);
+            // bool isValidRefreshToken = _refreshTokenValidator.Validate(refreshRequest.RefreshToken);
+            var refreshTokenCookie = Request.Cookies["RefreshToken"];
+
+            // bool isValidRefreshToken = _refreshTokenValidator.Validate(refreshRequest.RefreshToken);
+            bool isValidRefreshToken = _refreshTokenValidator.Validate(refreshTokenCookie);
 
             if (!isValidRefreshToken)
             {
                 return BadRequest();
             }
 
-            RefreshToken refreshToken = await _refreshTokenRepository.GetByToken(refreshRequest.RefreshToken);
+            RefreshToken refreshToken = await _refreshTokenRepository.GetByToken(refreshTokenCookie);
 
             if (refreshToken is null) { return NotFound(); }
 
             await _refreshTokenRepository.DeleteById(refreshToken.Id);
+
+            // maybe delete the RefreshToken cookie here?
 
             var user = await _userRepository.GetUserById(refreshToken.UserId);
 
@@ -102,8 +120,17 @@ namespace dotnet_blog_api.Controllers
 
             AuthenticatedUserResponse response = await _authenticator.Authenticate(user);
 
-            return Ok(response);
+            Response.Cookies.Append(key: "RefreshToken", value: response.RefreshToken, new CookieOptions
+            {
+                HttpOnly = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = DateTime.Now.AddMinutes(131400),
+                Secure = true,
+            });
+
+            return Ok(new { accessToken = response.AccessToken });
         }
+
 
         [Authorize]
         [HttpDelete("logout")]
@@ -119,6 +146,14 @@ namespace dotnet_blog_api.Controllers
 
             await _refreshTokenRepository.DeleteAll(userId);
 
+            foreach (var cookie in Request.Cookies)
+            {
+                Response.Cookies.Delete(cookie.Key, new CookieOptions()
+                {
+                    Secure = true
+                });
+            }
+
             return NoContent();
         }
 
@@ -129,6 +164,21 @@ namespace dotnet_blog_api.Controllers
             ServiceResponse<List<ShowUsersDto>> response = await _userRepository.GetAllUsers();
 
             return Ok(response);
+        }
+
+        [Authorize]
+        [HttpGet("checkauth")]
+        public IActionResult CheckAuth()
+        {
+            int? userId = int.Parse(
+                            _httpContextAccessor
+                            .HttpContext
+                            .User.FindFirstValue(ClaimTypes.NameIdentifier)
+                        );
+
+            if (userId is null) { return Unauthorized(); }
+
+            return Ok();
         }
     }
 }

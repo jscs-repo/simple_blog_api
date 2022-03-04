@@ -36,7 +36,9 @@ namespace dotnet_blog_api.Services.Authenticators
             return new AuthenticatedUserResponse
             {
                 AccessToken = accessToken,
-                RefreshToken = refreshToken
+                RefreshToken = refreshToken,
+                Username = user.Username,
+                Email = user.Email
             };
         }
     }
