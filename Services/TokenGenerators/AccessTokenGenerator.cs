@@ -37,7 +37,7 @@ namespace dotnet_blog_api.Services.TokenGenerators
                 _tokenValue,
                 "https://localhost:5001",
                 "https://localhost:5001",
-                50,
+                5,
                 claims
             );
         }
